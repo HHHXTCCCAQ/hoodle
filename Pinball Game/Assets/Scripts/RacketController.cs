@@ -7,19 +7,21 @@ using UnityEngine.UI;
 //Created By HeXiaoTao
 public class RacketController : MonoBehaviour
 {
-    
-    // Use this for initialization
-    void Start()
-    {
-        
-    }
+    private Animation animation;
 
+    private void Start()
+    {
+        animation = GetComponent<Animation>();
+    }
     // Update is called once per frame
     void Update()
     {
+        if (!Config.IsPause)
+        {
+            UseKeyboard();
+            UseAndroid();
+        }
        
-        UseKeyboard();
-        UseAndroid();
     }
     /// <summary>
     /// 在PC上操作
@@ -28,13 +30,13 @@ public class RacketController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-
-            this.transform.localPosition += new Vector3(-20, 0, 0);
+            if (this.transform.localPosition.x > -277)
+                this.transform.localPosition += new Vector3(-20, 0, 0);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-
-            this.transform.localPosition += new Vector3(20, 0, 0);
+            if (this.transform.localPosition.x < 277)
+                this.transform.localPosition += new Vector3(20, 0, 0);
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
@@ -76,13 +78,13 @@ public class RacketController : MonoBehaviour
     {
         if (LeftPress)
         {
-
-            this.transform.localPosition += new Vector3(-20, 0, 0);
+            if (this.transform.localPosition.x > -277)
+                this.transform.localPosition += new Vector3(-20, 0, 0);
         }
         if (RightPress)
         {
-
-            this.transform.localPosition += new Vector3(20, 0, 0);
+            if (this.transform.localPosition.x < 277)
+                this.transform.localPosition += new Vector3(20, 0, 0);
         }
         if (UpPress)
         {
@@ -93,6 +95,14 @@ public class RacketController : MonoBehaviour
         {
 
             this.transform.localRotation = Quaternion.Lerp(this.transform.localRotation, Quaternion.Euler(0, 0, 20), Time.deltaTime * 2);
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.tag.Equals("Ball"))
+        {
+            if (animation != null)
+                animation.Play();
         }
     }
 
