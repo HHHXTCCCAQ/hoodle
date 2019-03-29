@@ -65,10 +65,11 @@
     <Compile Include="Assets\Scripts\Config.cs" />
     <Compile Include="Assets\Scripts\ItemWall.cs" />
     <Compile Include="Assets\Scripts\PlayAnimation.cs" />
+    <Compile Include="Assets\Scripts\PlayerInfo.cs" />
     <Compile Include="Assets\Scripts\RacketController.cs" />
+    <Compile Include="Assets\Scripts\UI\Levels.cs" />
     <Compile Include="Assets\Scripts\UI\UI_Interface.cs" />
     <Compile Include="Assets\Scripts\UI\UI_Menu.cs" />
-    <Compile Include="Assets\Scripts\UI\UI_Setting.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Gitub/Demo_Ball/Pinball Game/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
