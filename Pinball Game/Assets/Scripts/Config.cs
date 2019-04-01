@@ -7,4 +7,5 @@ using UnityEngine;
 public class Config
 {
     public static bool IsPause = false;
+    public static bool IsGameOver = false;
 }

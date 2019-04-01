@@ -21,6 +21,7 @@ public class Ball : MonoBehaviour
     {
         if (collision.transform.name.Equals("GameOverLine"))
         {
+            Config.IsGameOver = true;
             if (!Gameover.activeSelf)
                 Gameover.SetActive(true);
         }

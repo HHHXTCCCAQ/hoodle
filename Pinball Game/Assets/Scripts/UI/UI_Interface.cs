@@ -13,7 +13,6 @@ public class UI_Interface : MonoBehaviour
     private Button but_Continue;
     private Button but_BackToStartScene;
     private Button but_ReStart;
-
     private GameObject PauseInterFace;
 
     // Use this for initialization
@@ -37,6 +36,8 @@ public class UI_Interface : MonoBehaviour
 
     void Pause()
     {
+        if (Config.IsGameOver)
+            return;
         if (!PauseInterFace.activeSelf)
             PauseInterFace.SetActive(true);
         Time.timeScale = 0;
@@ -51,6 +52,7 @@ public class UI_Interface : MonoBehaviour
     }
     private void ResetGame()
     {
+        Config.IsGameOver = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
