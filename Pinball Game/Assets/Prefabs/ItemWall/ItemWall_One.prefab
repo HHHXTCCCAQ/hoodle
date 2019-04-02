@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114817401465195396}
   m_Layer: 5
   m_Name: ItemWall_One
-  m_TagString: Untagged
+  m_TagString: ItemWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,9 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4d302b57b0b8445887ef8e1e2077b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystemprefab: {fileID: 198085830065571420, guid: 49516a427616e6c40a0796f3650b5c53,
-    type: 2}
-  canDestory: 1
+  blood: 1
 --- !u!222 &222789181039421668
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -111,13 +109,13 @@ RectTransform:
   m_GameObject: {fileID: 1242152135409286}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0000306, y: 1.0000306, z: 1.0000306}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -154.5, y: 210}
+  m_AnchoredPosition: {x: -154.49998, y: 160}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}

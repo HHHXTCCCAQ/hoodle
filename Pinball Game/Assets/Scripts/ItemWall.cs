@@ -4,35 +4,41 @@ using UnityEngine;
 //Wait for me, I don't want to let you down
 //love you into disease, but no medicine can.
 //Created By HeXiaoTao
-public class ItemWall : MonoBehaviour {
+public class ItemWall : MonoBehaviour
+{
 
     // Use this for initialization
+    private ChangeColor changeColor;
     private new Animation animation;
-    public ParticleSystem particleSystemprefab;
     private new ParticleSystem particleSystem;
     [SerializeField]
-    private bool canDestory = false;
+    private int blood = 2;
     void Start()
     {
         animation = GetComponent<Animation>();
-
+        changeColor = GetComponent<ChangeColor>();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag.Equals("Ball"))
         {
-            if (particleSystemprefab != null)
-            {
-                particleSystem = Instantiate(particleSystemprefab, collision.transform.position, Quaternion.Euler(new Vector3(90, 0, 0)));
-                particleSystem.Play();
-            }
+            blood--;
+            particleSystem = ObjPool._instance.GetObj(Config.BoomParticle1).GetComponent<ParticleSystem>();
+            particleSystem.transform.position = collision.transform.position;           
+            particleSystem.Play();
+            StartCoroutine(RecycleObj(particleSystem.gameObject));
+            if (changeColor != null)
+                changeColor.ChangeItemColor();
             if (animation != null)
                 animation.Play();
-            if (canDestory)
+            if (blood<=0)
                 Destroy(this.gameObject);
         }
-        Destroy(particleSystem, 0.5f);
     }
-
+    private IEnumerator RecycleObj(GameObject obj)
+    {
+        yield return new WaitForSeconds(0.5f);
+        ObjPool._instance.RecycleObj(obj);
+    }
 
 }

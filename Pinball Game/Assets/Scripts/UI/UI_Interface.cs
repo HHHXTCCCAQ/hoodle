@@ -14,6 +14,7 @@ public class UI_Interface : MonoBehaviour
     private Button but_BackToStartScene;
     private Button but_ReStart;
     private GameObject PauseInterFace;
+    private Button but_BackToStartScene1;
 
     // Use this for initialization
     void Start()
@@ -21,11 +22,14 @@ public class UI_Interface : MonoBehaviour
         but_Pause = transform.Find("but_Pause/").GetComponent<Button>();
         but_Continue = transform.Find("PauseInterface/but_Continue/").GetComponent<Button>();
         but_BackToStartScene = transform.Find("PauseInterface/but_BackToStartScene/").GetComponent<Button>();
+        but_BackToStartScene1 = transform.Find("GameOver/but_BackToStartScene/").GetComponent<Button>();
         but_ReStart = transform.Find("GameOver/but_ReStart/").GetComponent<Button>();
         PauseInterFace = transform.Find("PauseInterface/").gameObject;
         but_Pause.onClick.AddListener(Pause);
         but_Continue.onClick.AddListener(Continue);
         but_ReStart.onClick.AddListener(ResetGame);
+        but_BackToStartScene.onClick.AddListener(BackToStartScene);
+        but_BackToStartScene1.onClick.AddListener(BackToStartScene);
     }
 
     // Update is called once per frame
@@ -54,5 +58,9 @@ public class UI_Interface : MonoBehaviour
     {
         Config.IsGameOver = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    private void BackToStartScene()
+    {
+        SceneManager.LoadScene(1);
     }
 }

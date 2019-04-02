@@ -1,4 +1,4 @@
-using System.Collections;
+锘縰sing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,6 +45,7 @@ public class Levels : MonoBehaviour
         but_Level_8.onClick.AddListener(delegate { butlevelClick(9); });
         but_Level_9.onClick.AddListener(delegate { butlevelClick(10); });
         but_Level_10.onClick.AddListener(delegate { butlevelClick(11); });
+        but_Back.onClick.AddListener(Back);
     }
 
 
@@ -52,11 +53,11 @@ public class Levels : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-    private int maxlevel = 1;
+    private int maxlevel = 2;
     void butlevelClick(int index)
     {
         if (index - 1 > maxlevel)
-            Debug.Log("当前关卡需要全部通过前面关卡");
+            Debug.Log("褰撳墠鍏冲崱闇�瑕佸叏閮ㄩ�氳繃鍓嶉潰鍏冲崱");
         else
             SceneManager.LoadScene(index);
     }

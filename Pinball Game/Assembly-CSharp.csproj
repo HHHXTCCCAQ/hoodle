@@ -62,14 +62,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Ball.cs" />
+    <Compile Include="Assets\Scripts\ChangeColor.cs" />
     <Compile Include="Assets\Scripts\Config.cs" />
+    <Compile Include="Assets\Scripts\DelayStartGame.cs" />
     <Compile Include="Assets\Scripts\ItemWall.cs" />
+    <Compile Include="Assets\Scripts\ObjPool.cs" />
     <Compile Include="Assets\Scripts\PlayAnimation.cs" />
     <Compile Include="Assets\Scripts\PlayerInfo.cs" />
     <Compile Include="Assets\Scripts\RacketController.cs" />
     <Compile Include="Assets\Scripts\UI\Levels.cs" />
     <Compile Include="Assets\Scripts\UI\UI_Interface.cs" />
     <Compile Include="Assets\Scripts\UI\UI_Menu.cs" />
+    <None Include="Assets\Material\Font.fnt" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Gitub/Demo_Ball/Pinball Game/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

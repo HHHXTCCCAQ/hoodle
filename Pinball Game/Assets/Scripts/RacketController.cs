@@ -7,7 +7,7 @@ using UnityEngine.UI;
 //Created By HeXiaoTao
 public class RacketController : MonoBehaviour
 {
-    private Animation animation;
+    private new Animation animation;
 
     private void Start()
     {
@@ -16,7 +16,7 @@ public class RacketController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Config.IsPause)
+        if (!Config.IsPause&&DelayStartGame._instance.startGame)
         {
             UseKeyboard();
             UseAndroid();

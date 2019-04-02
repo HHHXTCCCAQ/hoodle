@@ -8,4 +8,7 @@ public class Config
 {
     public static bool IsPause = false;
     public static bool IsGameOver = false;
+    public const string BoomParticle1 = "BoomParticle1";
+    public const string BoomParticleleft = "BoomParticleleft";
+    public const string BoomParticleright = "BoomParticleright";
 }
