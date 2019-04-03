@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\ChangeColor.cs" />
     <Compile Include="Assets\Scripts\Config.cs" />
     <Compile Include="Assets\Scripts\DelayStartGame.cs" />
+    <Compile Include="Assets\Scripts\ItemChange\ItemChange.cs" />
     <Compile Include="Assets\Scripts\ItemWall.cs" />
     <Compile Include="Assets\Scripts\ObjPool.cs" />
     <Compile Include="Assets\Scripts\PlayAnimation.cs" />
