@@ -61,6 +61,8 @@ public class UI_Interface : MonoBehaviour
     }
     private void BackToStartScene()
     {
+        Time.timeScale = 1;
+        Config.IsPause = false;
         SceneManager.LoadScene(1);
     }
 }
