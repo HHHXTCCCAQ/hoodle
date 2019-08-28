@@ -68,16 +68,16 @@
     <Compile Include="Assets\Scripts\MapPoint.cs" />
     <Compile Include="Assets\Scripts\UI\BlankChess.cs" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>E:/UnityProject/MilitaryChessProject/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>D:/Gitub/Demo_Ball/MilitaryChessProject/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>E:/UnityProject/MilitaryChessProject/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/Gitub/Demo_Ball/MilitaryChessProject/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>E:/UnityProject/MilitaryChessProject/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>D:/Gitub/Demo_Ball/MilitaryChessProject/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>E:/UnityProject/MilitaryChessProject/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/Gitub/Demo_Ball/MilitaryChessProject/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Software/Unity/Unity2018.2.17/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

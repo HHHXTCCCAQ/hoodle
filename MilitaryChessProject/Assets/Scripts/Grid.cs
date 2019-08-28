@@ -6,7 +6,7 @@ using UnityEngine;
 public class Grid : MonoBehaviour
 {
 
-    public class Note
+    public class Node
     {
 
         public Vector2 pos;
@@ -14,8 +14,8 @@ public class Grid : MonoBehaviour
         public bool CanArrive = true;
         public float Tstart;
         public float Tend;
-        public Note parentNote;
-        public Note(Vector2 pos, int x, int y)
+        public Node parentNote;
+        public Node(Vector2 pos, int x, int y)
         {
             this.pos = pos;
             this.x = x;
@@ -24,6 +24,7 @@ public class Grid : MonoBehaviour
     }
     private float w = 5, h = 17;
     public Transform tr;
+    public Node[,] notes;
     private void Awake()
     {
         InitNote();
@@ -54,5 +55,25 @@ public class Grid : MonoBehaviour
                 go.transform.localPosition = startPoint + new Vector2(i * unitXvalue, j * unitYvalue);
             }
         }
+    }
+
+    public List<Node> ArroundNote(Node node)
+    {
+        List<Node> list = new List<Node>();
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                // 如果是自己，则跳过
+                if (i == 0 && j == 0)
+                    continue;
+                int x = node.x + i;
+                int y = node.y + j;
+                // 判断是否越界，如果没有，加到列表中
+                if (x < w && x >= 0 && y < h && y >= 0)
+                    list.Add(notes[x, y]);
+            }
+        }
+        return list;
     }
 }
