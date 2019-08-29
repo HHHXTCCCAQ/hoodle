@@ -11,17 +11,19 @@ public class Gamemanager : MonoBehaviour
     public GameObject borad2;
     public GameObject borad3;
     public Transform trans;
-    public List<AStartTest.NotePoint> a = new List<AStartTest.NotePoint>();
+    public int selectStep = 0;
+    public Grid grid;
     private GameObject chessprefab;
     private List<ChessType> blueChessList = new List<ChessType>();
     private List<ChessType> redChessList = new List<ChessType>();
-    
+    private AstarManager astarManager;
     private void Start()
     {
         Instance = this;
         chessprefab = Resources.Load<GameObject>("Chess/BlankChess");
-        InitChess();
+       // InitChess();
         InitChessDict();
+        astarManager = new AstarManager(this, grid);
     }
 
 
@@ -29,11 +31,6 @@ public class Gamemanager : MonoBehaviour
     {
         CreatChess(5, 6, borad1, 1);
         CreatChess(5, 6, borad2, 2);   
-        //foreach (var item in a)
-        //{
-        //    Debug.Log(item.Pos);
-        //}
-        // CreatChess(3, 3, borad3);
     }
     public void CreatChess(int xcount, int ycount, GameObject borad, int dot)
     {
@@ -47,19 +44,14 @@ public class Gamemanager : MonoBehaviour
         {
             for (int j = 0; j < ycount; j++)
             {
-                Vector2 pos= startPoint + new Vector2(i * unitXvalue, j * unitYvalue);
-                AStartTest.NotePoint notePoint = new AStartTest.NotePoint(pos,i,j);
-               // Instantiate(notePoint, trans) as GameObject;
-                a.Add(notePoint);
+                //Vector2 pos= startPoint + new Vector2(i * unitXvalue, j * unitYvalue);            
+                //Instantiate(notePoint, trans) as GameObject;
+            
                 if ((i == 1 && j == dot) || (i == 1 && j == dot + 2)
                      || (i == 2 && j == dot + 1) || (i == 3 && j == dot) || (i == 3 && j == dot + 2))
                     continue;
                 GameObject go = Instantiate(chessprefab, trans);
-                notePoint.chess = go;
-                go.GetComponent<BlankChess>().notePoint = notePoint;
-                notePoint.chess.transform.localPosition = notePoint.pos;
-                notePoint.CanArrive = false;
-                //go.transform.localPosition = startPoint + new Vector2(i * unitXvalue, j * unitYvalue);
+                go.transform.localPosition = startPoint + new Vector2(i * unitXvalue, j * unitYvalue);
             }
         }
     }
@@ -130,5 +122,19 @@ public class Gamemanager : MonoBehaviour
         }
         Debug.Log(blueChessList.Count + "||" + redChessList.Count);
         return go;
+    }
+
+    public void GetNode(Vector2 pos)
+    {
+        selectStep++;
+        astarManager.GetNode(pos, selectStep);
+        if (selectStep==2)
+        {
+            Debug.Log(astarManager.FindPath());
+        }
+        if (selectStep==3)
+        {
+            selectStep = 0;
+        }
     }
 }

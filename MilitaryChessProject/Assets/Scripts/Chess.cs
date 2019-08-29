@@ -6,7 +6,6 @@ using static Config;
 //Created By xxx
 public class Chess : MonoBehaviour {
     public ChessType chessType;
-    public AStartTest.NotePoint notePoint;
 	// Use this for initialization
 	void Start () {
 		

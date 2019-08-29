@@ -60,10 +60,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AStart\AStartTest.cs" />
+    <Compile Include="Assets\Scripts\AStar\AstarManager.cs" />
+    <Compile Include="Assets\Scripts\AStar\Grid.cs" />
+    <Compile Include="Assets\Scripts\AStar\UIT.cs" />
     <Compile Include="Assets\Scripts\Chess.cs" />
     <Compile Include="Assets\Scripts\Config.cs" />
-    <Compile Include="Assets\Scripts\Grid.cs" />
     <Compile Include="Assets\Scripts\Manager\Gamemanager.cs" />
     <Compile Include="Assets\Scripts\MapPoint.cs" />
     <Compile Include="Assets\Scripts\UI\BlankChess.cs" />
