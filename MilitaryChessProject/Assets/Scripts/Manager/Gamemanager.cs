@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using static Config;
+using static Grid;
 //love you into disease, but no medicine can.
 //Created By xxx
 public class Gamemanager : MonoBehaviour
@@ -17,20 +18,73 @@ public class Gamemanager : MonoBehaviour
     private List<ChessType> blueChessList = new List<ChessType>();
     private List<ChessType> redChessList = new List<ChessType>();
     private AstarManager astarManager;
+    private Node startnode;
+    private Node endnode;
     private void Start()
     {
         Instance = this;
         chessprefab = Resources.Load<GameObject>("Chess/BlankChess");
-       // InitChess();
+        // InitChess();
         InitChessDict();
         astarManager = new AstarManager(this, grid);
-    }
 
+    }
+    public void Update()
+    {
+        if (startnode != null && endnode != null)
+        {
+            if (startnode.Chessobj.GetComponent<Chess>().playerType.Equals
+                (endnode.Chessobj.GetComponent<Chess>().playerType))
+            {
+                startnode = endnode = null;
+            }
+            else
+            {
+                if (endnode.Chessobj == null)
+                {
+                    if (startnode.pointType == PointType.RailWay && endnode.pointType == PointType.RailWay)
+                    {
+                        switch (startnode.Chessobj.GetComponent<Chess>().chessType)
+                        {
+                            case ChessType.Mine:
+                                break;
+                            case ChessType.Sapper:
+                                break;
+                            case ChessType.PlatoonLeader:
+                                break;
+                            case ChessType.CompanyCommander:
+                                break;
+                            case ChessType.Bomb:
+                                break;
+                            case ChessType.Abteilungkommandeur:
+                                break;
+                            case ChessType.RegimentalCommander:
+                                break;
+                            case ChessType.BrigadeCommander:
+                                break;
+                            case ChessType.DivisionCommander:
+                                break;
+                            case ChessType.ArmyCommander:
+                                break;
+                            case ChessType.Commander:
+                                break;
+                            case ChessType.ArmyFlag:
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+
+        }
+    }
 
     public void InitChess()
     {
         CreatChess(5, 6, borad1, 1);
-        CreatChess(5, 6, borad2, 2);   
+        CreatChess(5, 6, borad2, 2);
     }
     public void CreatChess(int xcount, int ycount, GameObject borad, int dot)
     {
@@ -46,7 +100,7 @@ public class Gamemanager : MonoBehaviour
             {
                 //Vector2 pos= startPoint + new Vector2(i * unitXvalue, j * unitYvalue);            
                 //Instantiate(notePoint, trans) as GameObject;
-            
+
                 if ((i == 1 && j == dot) || (i == 1 && j == dot + 2)
                      || (i == 2 && j == dot + 1) || (i == 3 && j == dot) || (i == 3 && j == dot + 2))
                     continue;
@@ -100,6 +154,7 @@ public class Gamemanager : MonoBehaviour
                 randomnumb = Random.Range(0, blueChessList.Count);
                 go = Resources.Load<GameObject>("Chess/" + blueChessList[randomnumb].ToString() + "_B");
                 go.GetComponent<Chess>().chessType = blueChessList[randomnumb];
+                go.GetComponent<Chess>().playerType = PlayerType.Blue;
                 blueChessList.Remove(blueChessList[randomnumb]);
             }
 
@@ -114,9 +169,9 @@ public class Gamemanager : MonoBehaviour
             {
                 randomnumb = Random.Range(0, redChessList.Count);
                 go = Resources.Load<GameObject>("Chess/" + redChessList[randomnumb].ToString() + "_R");
-                redChessList.Remove(redChessList[randomnumb]);
                 go.GetComponent<Chess>().chessType = redChessList[randomnumb];
-
+                go.GetComponent<Chess>().playerType = PlayerType.Red;
+                redChessList.Remove(redChessList[randomnumb]);
             }
 
         }
@@ -124,17 +179,59 @@ public class Gamemanager : MonoBehaviour
         return go;
     }
 
-    public void GetNode(Vector2 pos)
+    public Node GetNode(Vector2 pos)
     {
         selectStep++;
-        astarManager.GetNode(pos, selectStep);
-        if (selectStep==2)
+        Node node = astarManager.GetNode(pos, selectStep);
+        if (selectStep == 2)
         {
+            endnode = node;
             Debug.Log(astarManager.FindPath());
-        }
-        if (selectStep==3)
-        {
             selectStep = 0;
+        }
+        else
+        {
+            startnode = node;
+        }
+        Debug.Log(startnode + "---" + endnode);
+        return node;
+    }
+
+    public void ChageChess(ChessType startType,ChessType endType)
+    {
+        switch (startType)
+        {
+            case ChessType.Mine:
+                Debug.Log("is mine can not move");
+                break;
+            case ChessType.Sapper:
+                if (endType==ChessType.Null)
+                {
+                    astarManager.FindPath();
+                }
+                break;
+            case ChessType.PlatoonLeader:
+                break;
+            case ChessType.CompanyCommander:
+                break;
+            case ChessType.Bomb:
+                break;
+            case ChessType.Abteilungkommandeur:
+                break;
+            case ChessType.RegimentalCommander:
+                break;
+            case ChessType.BrigadeCommander:
+                break;
+            case ChessType.DivisionCommander:
+                break;
+            case ChessType.ArmyCommander:
+                break;
+            case ChessType.Commander:
+                break;
+            case ChessType.ArmyFlag:
+                break;
+            default:
+                break;
         }
     }
 }

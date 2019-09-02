@@ -17,7 +17,7 @@ public class AstarManager
         this.gamemanager = gamemanager;
         this.grid = grid;
     }
-    public void GetNode(Vector2 pos, int selectStep)
+    public Node GetNode(Vector2 pos, int selectStep)
     {
         Node node = grid.GetItem(pos);
         if (selectStep == 1)
@@ -28,7 +28,7 @@ public class AstarManager
         {
             endNode = node;
         }
-        Debug.Log(node.x + "---" + node.y);
+        return node;
     }
 
     int GetDistanceNodes(Node a, Node b)
@@ -71,8 +71,6 @@ public class AstarManager
                 closeList.Add(currentNode);
                 if (currentNode == endNode)
                 {
-
-
                     return true;
                 }
                 foreach (var item in grid.ArroundNote(currentNode))

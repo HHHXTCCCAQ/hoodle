@@ -26,13 +26,16 @@ public class Config
         ArmyCommander = 9,//军长
         Commander = 10,//司令
         ArmyFlag = 11,//军旗
-
+        Null=12
 
     }
-    public enum RoadType
+    public enum PointType
     {
         HighWay,//公路
-        RailWay//铁路
+        RailWay,//铁路
+        LineCamp,//行营
+        BaseCamp//大本营
+
     }
    
 }

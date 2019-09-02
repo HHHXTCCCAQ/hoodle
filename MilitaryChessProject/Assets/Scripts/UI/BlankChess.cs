@@ -13,9 +13,11 @@ public class BlankChess : MonoBehaviour
     }
     private void DrowChess()
     {
+        Gamemanager.Instance.selectStep = 0;
         GameObject go = Gamemanager.Instance.DrawChess();
         go = Instantiate(go,transform.parent);
         go.transform.localPosition = transform.localPosition;
+        Gamemanager.Instance.grid.GetItem(transform.localPosition).Chessobj = go;
         Destroy(this.gameObject);
     }
 }
