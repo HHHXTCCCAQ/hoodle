@@ -8,108 +8,71 @@ using static Grid;
 public class Gamemanager : MonoBehaviour
 {
     public static Gamemanager Instance;
-    public GameObject borad1;
-    public GameObject borad2;
-    public GameObject borad3;
+    public Transform Canvas;
     public Transform trans;
+    [HideInInspector]
     public int selectStep = 0;
     public Grid grid;
+    public Node[,] nodes;
+    [HideInInspector]
+    public int currentplayerType = 1;
     private GameObject chessprefab;
     private List<ChessType> blueChessList = new List<ChessType>();
     private List<ChessType> redChessList = new List<ChessType>();
     private AstarManager astarManager;
+    public  ComputerAIAlgorithm aIAlgorithm;
     private Node startnode;
     private Node endnode;
-    private void Start()
+    private ChessType startchessType;
+    private ChessType endchessType;
+    private PlayerType startpalyerType;
+    private PlayerType endpalyerType;
+    private void Awake()
     {
         Instance = this;
         chessprefab = Resources.Load<GameObject>("Chess/BlankChess");
-        // InitChess();
         InitChessDict();
+        nodes = grid.nodes;
         astarManager = new AstarManager(this, grid);
 
     }
     public void Update()
     {
-        if (startnode != null && endnode != null)
+        if (currentplayerType==2)
         {
-            if (startnode.Chessobj.GetComponent<Chess>().playerType.Equals
-                (endnode.Chessobj.GetComponent<Chess>().playerType))
+            aIAlgorithm.jude();
+            currentplayerType++;
+        }
+
+        if (currentplayerType == 3)
+        {
+            currentplayerType = 1;
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 pos = Vector2.one;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(Canvas as RectTransform,
+                        Input.mousePosition, Camera.main, out pos);
+            for (int i = 0; i < nodes.GetLength(0); i++)
             {
-                startnode = endnode = null;
-            }
-            else
-            {
-                if (endnode.Chessobj == null)
+                for (int j = 0; j < nodes.GetLength(1); j++)
                 {
-                    if (startnode.pointType == PointType.RailWay && endnode.pointType == PointType.RailWay)
+                    if (Vector2.Distance(pos, nodes[i, j].pos) <= 41f)
                     {
-                        switch (startnode.Chessobj.GetComponent<Chess>().chessType)
+                        if (nodes[i, j].isCanClick == false)
+                            continue;
+                        if (selectStep == 1 && nodes[i, j].Chessobj == null)
                         {
-                            case ChessType.Mine:
-                                break;
-                            case ChessType.Sapper:
-                                break;
-                            case ChessType.PlatoonLeader:
-                                break;
-                            case ChessType.CompanyCommander:
-                                break;
-                            case ChessType.Bomb:
-                                break;
-                            case ChessType.Abteilungkommandeur:
-                                break;
-                            case ChessType.RegimentalCommander:
-                                break;
-                            case ChessType.BrigadeCommander:
-                                break;
-                            case ChessType.DivisionCommander:
-                                break;
-                            case ChessType.ArmyCommander:
-                                break;
-                            case ChessType.Commander:
-                                break;
-                            case ChessType.ArmyFlag:
-                                break;
-                            default:
-                                break;
+                            GetNode(nodes[i, j].pos);                           
+                            Debug.Log(nodes[i, j].pos + "+++");
                         }
+
                     }
                 }
             }
-
-
-        }
-    }
-
-    public void InitChess()
-    {
-        CreatChess(5, 6, borad1, 1);
-        CreatChess(5, 6, borad2, 2);
-    }
-    public void CreatChess(int xcount, int ycount, GameObject borad, int dot)
-    {
-        float broadWidth = borad.GetComponent<RectTransform>().rect.width;
-        float broadHight = borad.GetComponent<RectTransform>().rect.height;
-        Vector2 startPoint = new Vector2(borad.transform.localPosition.x - broadWidth / 2,
-          borad.transform.localPosition.y - broadHight / 2);
-        float unitXvalue = broadWidth / (xcount - 1);
-        float unitYvalue = broadHight / (ycount - 1);
-        for (int i = 0; i < xcount; i++)
-        {
-            for (int j = 0; j < ycount; j++)
-            {
-                //Vector2 pos= startPoint + new Vector2(i * unitXvalue, j * unitYvalue);            
-                //Instantiate(notePoint, trans) as GameObject;
-
-                if ((i == 1 && j == dot) || (i == 1 && j == dot + 2)
-                     || (i == 2 && j == dot + 1) || (i == 3 && j == dot) || (i == 3 && j == dot + 2))
-                    continue;
-                GameObject go = Instantiate(chessprefab, trans);
-                go.transform.localPosition = startPoint + new Vector2(i * unitXvalue, j * unitYvalue);
-            }
-        }
-    }
-
+        }       
+        MoveBehavior();
+    }   
     public void InitChessDict()
     {
         int key = 0;
@@ -175,7 +138,6 @@ public class Gamemanager : MonoBehaviour
             }
 
         }
-        Debug.Log(blueChessList.Count + "||" + redChessList.Count);
         return go;
     }
 
@@ -192,46 +154,287 @@ public class Gamemanager : MonoBehaviour
         else
         {
             startnode = node;
+            Debug.Log(startnode + "---" + endnode);
         }
-        Debug.Log(startnode + "---" + endnode);
         return node;
     }
 
-    public void ChageChess(ChessType startType,ChessType endType)
+    public void MoveBehavior()
     {
-        switch (startType)
+        if (startnode != null && endnode != null)
         {
-            case ChessType.Mine:
-                Debug.Log("is mine can not move");
-                break;
-            case ChessType.Sapper:
-                if (endType==ChessType.Null)
+            startchessType = startnode.Chessobj.GetComponent<Chess>().chessType;
+            startpalyerType = startnode.Chessobj.GetComponent<Chess>().playerType;
+            if (endnode.Chessobj != null)
+            {
+                endchessType = endnode.Chessobj.GetComponent<Chess>().chessType;
+                endpalyerType = endnode.Chessobj.GetComponent<Chess>().playerType;
+            }
+            else
+            {
+                endchessType = ChessType.Null;
+                endpalyerType = PlayerType.Null;
+            }
+
+            if (startpalyerType.Equals(endpalyerType))
+            {
+                startnode = endnode = null;
+            }
+            else
+            {
+                if (startnode.pointType == PointType.RailWay && endnode.pointType == PointType.RailWay)
                 {
-                    astarManager.FindPath();
+                    Debug.Log(RailWayIsCanArrive());
+                    if (startchessType == ChessType.Sapper || RailWayIsCanArrive())
+                    {
+                        JudgeFeasibility();
+                    }
                 }
-                break;
-            case ChessType.PlatoonLeader:
-                break;
-            case ChessType.CompanyCommander:
-                break;
-            case ChessType.Bomb:
-                break;
-            case ChessType.Abteilungkommandeur:
-                break;
-            case ChessType.RegimentalCommander:
-                break;
-            case ChessType.BrigadeCommander:
-                break;
-            case ChessType.DivisionCommander:
-                break;
-            case ChessType.ArmyCommander:
-                break;
-            case ChessType.Commander:
-                break;
-            case ChessType.ArmyFlag:
-                break;
-            default:
-                break;
+                else if (endnode.pointType == PointType.LineCamp || endnode.pointType == PointType.BaseCamp)
+                {
+                    if (endchessType == ChessType.Null)
+                    {
+                        //TODO  查看两个点是否在移动范围内
+                        if (AtherIsArrive())
+                        {
+                            //Debug.Log("Move to");
+                            JudgeFeasibility();
+                        }
+                        else
+                        {
+
+                            Debug.Log("con  not  move");
+                        }
+                    }
+                    else
+                    {
+
+                        Debug.Log("con  not  move");
+
+                    }
+                }
+                else
+                {
+                    if (AtherIsArrive())
+                    {
+                        //Debug.Log("Move to");
+                        JudgeFeasibility();
+                    }
+                    else
+                    {
+
+                        Debug.Log("con  not  move");
+                    }
+                }
+                startnode = endnode = null;
+            }
+
+
         }
+    }
+    /// <summary>
+    /// 判断是否可行
+    /// </summary>
+    public void JudgeFeasibility()
+    {
+        if (startchessType == ChessType.Sapper)
+        {
+            switch (endchessType)
+            {
+                case ChessType.Mine:
+                    DestroyEndChess();
+                    break;
+                case ChessType.Sapper:
+                    DestroyBothChess();
+                    break;
+                case ChessType.Bomb:
+                    DestroyBothChess();
+                    break;
+                case ChessType.ArmyFlag:
+                    DestroyEndChess();
+                    break;
+                case ChessType.Null:
+
+                    MoveToEndNode();
+                    break;
+                default:
+                    Debug.Log("cont move");
+                    break;
+            }
+
+        }
+        else if (startchessType == ChessType.Bomb)
+        {
+            switch (endchessType)
+            {
+                case ChessType.Null:
+                    MoveToEndNode();
+                    break;
+                default:
+                    DestroyBothChess();
+                    break;
+            }
+        }
+        else if (startchessType == ChessType.Mine || startchessType == ChessType.ArmyFlag)
+        {
+
+            Debug.Log("can not move");
+        }
+        else
+        {
+            switch (endchessType)
+            {
+                case ChessType.Mine:
+
+                    Debug.Log("can not move");
+                    break;
+                case ChessType.Bomb:
+                    DestroyBothChess();
+                    break;
+                case ChessType.ArmyFlag:
+ 
+                    Debug.Log("can not move");
+                    break;
+                case ChessType.Null:
+
+                    MoveToEndNode();
+                    break;
+                default:
+                    JudgeChess(startchessType, endchessType);
+                    break;
+            }
+        }
+    }
+    /// <summary>
+    /// 判断铁路之间是否能够到达
+    /// </summary>
+    /// <returns></returns>
+    private bool RailWayIsCanArrive()
+    {
+        int index;
+        if (startnode.x == endnode.x)
+        {
+            index = 0;
+            for (int i = Mathf.Min(startnode.y, endnode.y) + 1; i < Mathf.Max(startnode.y, endnode.y); i++)
+            {
+                if (nodes[startnode.x, i].Chessobj != null)
+                {
+                    index++;
+                }
+            }
+            if (index == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if (startnode.y == endnode.y)
+        {
+            index = 0;
+            for (int i = Mathf.Min(startnode.x, endnode.x) + 1; i < Mathf.Max(startnode.x, endnode.x); i++)
+            {
+                if (nodes[i, startnode.y].Chessobj != null)
+                {
+                    index++;
+                }
+            }
+            if (index == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    /// <summary>
+    /// 判断不同道路是否到达
+    /// </summary>
+    /// <returns></returns>
+    private bool AtherIsArrive()
+    {
+        if (Mathf.Abs(startnode.x - endnode.x) > 1 || Mathf.Abs(startnode.y - endnode.y) > 1)
+        {
+            return false;
+
+        }
+        else
+        {
+            if (startnode.pointType == PointType.LineCamp || endnode.pointType == PointType.LineCamp)
+            {
+                if (Mathf.Abs(startnode.x - endnode.x) <= 1 && Mathf.Abs(startnode.y - endnode.y) <= 1)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if ((Mathf.Abs(startnode.x - endnode.x) <= 1 && Mathf.Abs(startnode.y - endnode.y) == 0) ||
+                    (Mathf.Abs(startnode.x - endnode.x) == 0 && Mathf.Abs(startnode.y - endnode.y) <= 1))
+
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void MoveToEndNode()
+    {
+        endnode.CanArrive = false;
+        endnode.Chessobj = startnode.Chessobj;
+        endnode.Chessobj.transform.localPosition = endnode.pos;
+        startnode.Chessobj = null;
+        startnode.CanArrive = true;
+        currentplayerType++;
+    }
+    /// <summary>
+    /// 判断两个棋子大小，并作出相应操作
+    /// </summary>
+    private void JudgeChess(ChessType startchessType, ChessType endchessType)
+    {
+        if ((int)startchessType > (int)endchessType)
+        {
+            DestroyEndChess();
+        }
+        else if ((int)startchessType == (int)endchessType)
+        {
+            DestroyBothChess();
+        }
+        else
+        {
+        
+            Debug.Log("Can not move");
+        }
+    }
+    private void DestroyEndChess()
+    {
+        Destroy(endnode.Chessobj);
+    
+        MoveToEndNode();
+    }
+    private void DestroyBothChess()
+    {
+   
+        currentplayerType++;
+        endnode.CanArrive = true;
+        startnode.CanArrive = true;
+        Destroy(endnode.Chessobj);
+        Destroy(startnode.Chessobj);
+        endnode.Chessobj = null;
+        startnode.Chessobj = null;
+    }
+    private void GameResult()
+    {
+
     }
 }

@@ -60,14 +60,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AStar\AstarManager.cs" />
-    <Compile Include="Assets\Scripts\AStar\Grid.cs" />
-    <Compile Include="Assets\Scripts\AStar\UIT.cs" />
+    <Compile Include="Assets\Scripts\AI\AstarManager.cs" />
+    <Compile Include="Assets\Scripts\AI\ComputerAIAlgorithm.cs" />
+    <Compile Include="Assets\Scripts\AI\Grid.cs" />
+    <Compile Include="Assets\Scripts\AI\UIT.cs" />
     <Compile Include="Assets\Scripts\Config.cs" />
     <Compile Include="Assets\Scripts\Manager\Gamemanager.cs" />
     <Compile Include="Assets\Scripts\MapPoint.cs" />
     <Compile Include="Assets\Scripts\UI\BlankChess.cs" />
     <Compile Include="Assets\Scripts\UI\Chess.cs" />
+    <Compile Include="Assets\Scripts\UI\FightComputerUI.cs" />
+    <Compile Include="Assets\Scripts\UI\FightPeopleUI.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayChessUI.cs" />
+    <Compile Include="Assets\Scripts\UI\StartUI.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Gitub/Demo_Ball/MilitaryChessProject/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
@@ -277,6 +282,9 @@
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>D:/Software/Unity/Unity2018.2.17/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>D:/Gitub/Demo_Ball/MilitaryChessProject/Assets/Plugins/System.Windows.Forms.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/hhhxt/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>

@@ -8,10 +8,11 @@ public class Config
     //玩家类型
     public enum PlayerType
     {
+        Null,
         Red,
         Blue
     }
-   
+
     public enum ChessType
     {
         Mine = 0,//地雷
@@ -26,8 +27,8 @@ public class Config
         ArmyCommander = 9,//军长
         Commander = 10,//司令
         ArmyFlag = 11,//军旗
-        Null=12
-
+        Null = 12,
+        BlackChess=13
     }
     public enum PointType
     {
@@ -37,5 +38,11 @@ public class Config
         BaseCamp//大本营
 
     }
-   
+    public enum AIBehavior
+    {
+        EatChess,
+        EatEach,
+        Move,
+        Null,
+    }
 }

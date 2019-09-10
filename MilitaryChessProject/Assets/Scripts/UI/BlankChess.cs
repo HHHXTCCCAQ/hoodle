@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using static Grid;
 //love you into disease, but no medicine can.
 //Created By xxx
 public class BlankChess : MonoBehaviour
@@ -14,10 +15,20 @@ public class BlankChess : MonoBehaviour
     private void DrowChess()
     {
         Gamemanager.Instance.selectStep = 0;
+        Gamemanager.Instance.currentplayerType++;
         GameObject go = Gamemanager.Instance.DrawChess();
-        go = Instantiate(go,transform.parent);
+        go = Instantiate(go, transform.parent);
         go.transform.localPosition = transform.localPosition;
-        Gamemanager.Instance.grid.GetItem(transform.localPosition).Chessobj = go;
+        Node node = Gamemanager.Instance.grid.GetItem(transform.localPosition);
+        node.Chessobj = go;
+        node.chessType = go.GetComponent<Chess>().chessType;
+        node.playerType = go.GetComponent<Chess>().playerType;
+        if (go.GetComponent<Chess>().playerType==Config.PlayerType.Blue)
+        {
+            
+            Gamemanager.Instance.aIAlgorithm.AINodes.Add(node);
+           
+        }   
         Destroy(this.gameObject);
     }
 }

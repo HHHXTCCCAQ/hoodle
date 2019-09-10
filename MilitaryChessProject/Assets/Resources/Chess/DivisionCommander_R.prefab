@@ -90,7 +90,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300004, guid: 446a985c2cfee4946ac0d40d3f4f8a01, type: 3}
+  m_Sprite: {fileID: 21300072, guid: fee6cbb41ffc6774cb6c0ec0f10a28b2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -109,7 +109,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5faa0ccf261120c42943d2110785e096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chessType: 0
+  chessType: 8
+  playerType: 1
+  but: {fileID: 0}
 --- !u!222 &222594224891571206
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -133,5 +135,5 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 22, y: 22}
+  m_SizeDelta: {x: 71, y: 42}
   m_Pivot: {x: 0.5, y: 0.5}

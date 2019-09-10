@@ -18,7 +18,9 @@ public class Chess : MonoBehaviour {
 	
 	void OnButClick()
     {
+        if (Gamemanager.Instance.selectStep == 0 && (int)playerType != Gamemanager.Instance.currentplayerType)
+            return;
         Node node = Gamemanager.Instance.GetNode(transform.localPosition);
-        Debug.Log(node.CanArrive + "-" + node.Chessobj + node.chessType+node.pointType);
+        Debug.Log(node.CanArrive + "-" + node.Chessobj +"-"+ node.chessType + "-" + node.pointType);
     }
 }
